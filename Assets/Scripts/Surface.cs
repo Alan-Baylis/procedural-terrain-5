@@ -26,13 +26,7 @@ public class Surface : MonoBehaviour {
 
     void Awake() {
         placeholder.gameObject.SetActive(true);
-        placeholder.localScale = new Vector3(
-            placeholderSize.x + placeholderBorder,
-            placeholder.localScale.y,
-            placeholderSize.y + placeholderBorder);
-
-        GenerateTiles();
-        ResizeTiles();
+        UpdatePlaceholder();
 
         _placeholderSize = placeholderSize;
         _tileSize = tileSize;
@@ -42,28 +36,33 @@ public class Surface : MonoBehaviour {
 
     void Update() {
         if (placeholderSize != _placeholderSize) {
+            UpdatePlaceholder();
             _placeholderSize = placeholderSize;
-            placeholder.localScale = new Vector3(
-                placeholderSize.x + placeholderBorder,
-                placeholder.localScale.y,
-                placeholderSize.y + placeholderBorder);
-            GenerateTiles();
         }
 
         if (tileSize != _tileSize) {
-            _tileSize = tileSize;
             GenerateTiles();
+            _tileSize = tileSize;
         }
 
         if (maxTileHeight != _maxTileHeight) {
-            _maxTileHeight = maxTileHeight;
             ResizeTiles();
+            _maxTileHeight = maxTileHeight;
         }
 
         if (maxSteps != _maxSteps) {
-            _maxSteps = maxSteps;
             ResizeTiles();
+            _maxSteps = maxSteps;
         }
+    }
+
+    void UpdatePlaceholder() {
+        placeholder.localScale = new Vector3(
+            placeholderSize.x + placeholderBorder,
+            placeholder.localScale.y,
+            placeholderSize.y + placeholderBorder);
+
+        GenerateTiles();
     }
 
     void GenerateTiles() {
@@ -83,7 +82,8 @@ public class Surface : MonoBehaviour {
 
             for (int z = 0; z + tileSize <= placeholderSize.y; z += tileSize) {
                 GameObject tile = Instantiate(tilePrefab);
-                tile.transform.position = new Vector3(xPos, 0, z + zPadding + tileSize / 2.0f - placeholderSize.y / 2.0f);
+                float zPos = z + zPadding + tileSize / 2.0f - placeholderSize.y / 2.0f;
+                tile.transform.position = new Vector3(xPos, 0, zPos);
                 tile.transform.localScale = Vector3.one * tileSize;
                 tile.transform.parent = tileParent;
                 tiles.Add(tile.GetComponent<Tile>());
