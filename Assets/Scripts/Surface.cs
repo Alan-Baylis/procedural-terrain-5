@@ -93,7 +93,7 @@ public class Surface : MonoBehaviour {
         ResizeTiles();
     }
 
-    void ResizeTiles() {
+    public void ResizeTiles() {
         float stepSize = maxTileHeight / (float)maxSteps;
 
         foreach (Tile tile in tiles) {
