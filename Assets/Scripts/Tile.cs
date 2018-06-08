@@ -1,26 +1,28 @@
 ﻿using UnityEngine;
 
 public class Tile : MonoBehaviour {
-    public GameObject top;
-    public GameObject bottom;
+    public Transform top;
+    public Transform bottom;
 
-    Vector3 topSize;
-    Vector3 bottomSize;
-    Vector3 startingBottomScale;
+    float topHeight;
 
     void Awake() {
-        topSize = top.GetComponentInChildren<Renderer>().bounds.size;
-        bottomSize = bottom.GetComponentInChildren<Renderer>().bounds.size;
-        startingBottomScale = bottom.transform.localScale;    
+        topHeight = top.GetComponent<Renderer>().bounds.size.y;
     }
 
     public void UpdateHeight(float height) {
-        Vector3 newPosition = transform.position;
-        newPosition.y = height;
-        transform.position = newPosition;
+        float bottomHeight = height - topHeight;
 
-        //Vector3 newBottomScale = bottom.transform.localScale;
-        //newBottomScale.y = startingBottomScale.y * (height - bottomSize.y);
-        //bottom.transform.localScale = newBottomScale;
+        Vector3 bottomPosition = bottom.localPosition;
+        bottomPosition.y = bottomHeight / 2;
+        bottom.localPosition = bottomPosition;
+
+        Vector3 bottomScale = bottom.localScale;
+        bottomScale.y = bottomHeight;
+        bottom.localScale = bottomScale;
+
+        Vector3 topPosition = top.localPosition;
+        topPosition.y = bottomHeight + topHeight / 2;
+        top.localPosition = topPosition;
     }
 }

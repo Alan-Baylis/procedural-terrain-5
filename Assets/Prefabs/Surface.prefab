@@ -140,3 +140,5 @@ MonoBehaviour:
   tilePrefab: {fileID: 1064975141853982, guid: 1e7ba9ba7da232948b3464b0cab5360a, type: 2}
   placeholderSize: {x: 100, y: 100}
   tileSize: 10
+  maxTileHeight: 3
+  maxSteps: 3

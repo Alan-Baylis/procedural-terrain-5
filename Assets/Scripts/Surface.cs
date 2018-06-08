@@ -26,6 +26,10 @@ public class Surface : MonoBehaviour {
 
     void Awake() {
         placeholder.gameObject.SetActive(true);
+        placeholder.localScale = new Vector3(
+            placeholderSize.x + placeholderBorder,
+            placeholder.localScale.y,
+            placeholderSize.y + placeholderBorder);
 
         GenerateTiles();
         ResizeTiles();
@@ -39,7 +43,10 @@ public class Surface : MonoBehaviour {
     void Update() {
         if (placeholderSize != _placeholderSize) {
             _placeholderSize = placeholderSize;
-            placeholder.localScale = new Vector3(placeholderSize.x + placeholderBorder, 0.0001f, placeholderSize.y + placeholderBorder);
+            placeholder.localScale = new Vector3(
+                placeholderSize.x + placeholderBorder,
+                placeholder.localScale.y,
+                placeholderSize.y + placeholderBorder);
             GenerateTiles();
         }
 
