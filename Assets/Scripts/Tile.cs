@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour {
     }
 
     public void UpdateHeight(float height) {
+        gameObject.SetActive(height != 0);
+
         float bottomHeight = height - topHeight;
 
         Vector3 bottomPosition = bottom.localPosition;
